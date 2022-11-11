@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
+
 @RestController
 public class TokenController {
 
@@ -15,12 +17,17 @@ public class TokenController {
     private TokenService tokenService;
 
     @GetMapping("/token")
-    public String getCurrentToken() {
-        return tokenService.getCurrentToken();
+    public TokenDto getCurrentToken() {
+        return new TokenDto(tokenService.getCurrentToken());
     }
 
     @PostMapping("/token")
-    public String setCurrentToken(@RequestBody TokenDto tokenDto) {
-        return tokenService.setCurrentToken(tokenDto.getToken());
+    public TokenDto setCurrentToken(@RequestBody TokenDto tokenDto) {
+        return new TokenDto(tokenService.setCurrentToken(tokenDto.getToken()));
+    }
+
+    @GetMapping("/token/exp")
+    public LocalDate getExpiration() {
+        return tokenService.getTokenExpiration();
     }
 }

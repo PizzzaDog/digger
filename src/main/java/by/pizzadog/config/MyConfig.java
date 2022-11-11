@@ -13,6 +13,9 @@ public class MyConfig {
     @Value("${variable.bel.ip}")
     private String BEL_IP;
 
+    @Value("${token.default}")
+    private String tokenDefault;
+
     @Bean
     public RestTemplate getRestTemplate() {
         return new RestTemplate();
@@ -20,10 +23,18 @@ public class MyConfig {
 
     @Bean
     public HttpPhoneRequest<HttpHeaders> getCommonHttpRequest() {
+        HttpHeaders headers = getHttpHeaders();
+        return new HttpPhoneRequest<>(headers);
+    }
+
+    @Bean
+    public HttpHeaders getHttpHeaders() {
         HttpHeaders headers = new HttpHeaders();
         headers.add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36");
         headers.add("content-type", "application/json");
+        headers.add("x-app-name", "Web Kufar");
+        headers.add("authorization", tokenDefault);
         headers.add("X-Forwarded-For", BEL_IP);
-        return new HttpPhoneRequest<>(headers);
+        return headers;
     }
 }

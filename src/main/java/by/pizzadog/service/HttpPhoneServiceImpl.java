@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -30,7 +29,6 @@ public class HttpPhoneServiceImpl implements HttpPhoneService {
     @Override
     public PhoneNumberDto getPhoneById(Long id) {
         String caseUrl = URL + id + "/phone";
-        ResponseEntity<PhoneNumberDto> response = restTemplate.exchange(caseUrl, HttpMethod.GET, phoneRequest, PhoneNumberDto.class);
-        return response.getBody();
+        return restTemplate.exchange(caseUrl, HttpMethod.GET, phoneRequest, PhoneNumberDto.class).getBody();
     }
 }

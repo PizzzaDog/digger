@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class    PhoneNumberDto {
+public class PhoneNumberDto {
     private String phone;
 }
